@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from line_fit_config import *
+from demon_config import *
 
 def hb(gmodel,lam,cube,SN,c,results_dir,aut_ini):
     
@@ -551,9 +551,7 @@ def hb_ha_n2_cons(gmodel,lam,cube,SN,c,results_dir,aut_ini):
             f_res = np.concatenate((cube[1].data[lam_i_hb:lam_f_hb,:,:],cube[1].data[lam_i_ha:lam_f_ha,:,:]))
         lam_r = np.concatenate((lam[lam_i_hb:lam_f_hb],lam[lam_i_ha:lam_f_ha]))
 
-        SN_exp = np.exp(SN[np.newaxis,np.newaxis,:,:])
-        SN_exp[~np.isfinite(SN_exp)] = np.nan
-        f_res_int_eSN = np.nanmean(f_res*SN_exp,axis=(1,2))
+        f_res_int_eSN = np.nanmean(f_res*np.exp(SN[np.newaxis,:,:]),axis=(1,2))
         f_res_int_eSN = f_res_int_eSN*np.max(np.nanmean(f_res,axis=(1,2)))/np.max(f_res_int_eSN)
 
         initial_fit = gmodel.fit(f_res_int_eSN, params, x=lam_r)

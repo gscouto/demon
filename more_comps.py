@@ -1,6 +1,6 @@
 import numpy as np
 from astropy.io import fits
-from line_fit_config import *
+from demon_config import *
 from lmfit import Model, fit_report
 import fit_functions
 import matplotlib.pyplot as plt

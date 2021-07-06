@@ -3,7 +3,7 @@ from astropy.io import fits
 import tables
 import h5py
 from astropy.constants import c
-from line_fit_config import *
+from demon_config import *
 
 c = c.value/1000.
 
@@ -26,6 +26,7 @@ def one_gaussian(naxis1,naxis2,result_list,results_dir,lam_r):
     residualsm = np.zeros([naxis2,naxis1])
     redchi = np.zeros([naxis2,naxis1])
     redchi_w = np.zeros([naxis2,naxis1])
+    bic = np.zeros([naxis2,naxis1])
     
     residual = np.zeros([len(results[0,0].residual),naxis2,naxis1])
     model = np.zeros([len(results[0,0].residual),naxis2,naxis1])
@@ -51,6 +52,7 @@ def one_gaussian(naxis1,naxis2,result_list,results_dir,lam_r):
             residualsm[j,i] = np.abs(np.sum(results[j,i].residual))
             redchi[j,i] = results[j,i].redchi
             redchi_w[j,i] = results[j,i].redchi*np.abs(residualsm[j,i])
+            bic[j,i] = results[j,i].bic
             
             residual[:,j,i] = results[j,i].residual
             data[:,j,i] = results[j,i].data
@@ -70,6 +72,7 @@ def one_gaussian(naxis1,naxis2,result_list,results_dir,lam_r):
     fits.writeto(results_dir+'/residuals.fits',residualsm,overwrite=True)
     fits.writeto(results_dir+'/redchi.fits',redchi,overwrite=True)
     fits.writeto(results_dir+'/redchi_w.fits',redchi_w,overwrite=True)
+    fits.writeto(results_dir+'/bic.fits',bic,overwrite=True)
 
     xm = np.ravel(xm)
     ym = np.ravel(ym)
@@ -169,6 +172,7 @@ def two_gaussians(naxis1,naxis2,result_list,results_dir,lam_r):
     residualsm = np.zeros([naxis2,naxis1])
     redchi = np.zeros([naxis2,naxis1])
     redchi_w = np.zeros([naxis2,naxis1])
+    bic = np.zeros([naxis2,naxis1])
     
     residual = np.zeros([len(results[0,0].residual),naxis2,naxis1])
     model = np.zeros([len(results[0,0].residual),naxis2,naxis1])
@@ -200,6 +204,7 @@ def two_gaussians(naxis1,naxis2,result_list,results_dir,lam_r):
             residualsm[j,i] = np.abs(np.sum(results[j,i].residual))
             redchi[j,i] = results[j,i].redchi
             redchi_w[j,i] = results[j,i].redchi*np.abs(residualsm[j,i])
+            bic[j,i] = results[j,i].bic
             
             residual[:,j,i] = results[j,i].residual
             data[:,j,i] = results[j,i].data
@@ -225,6 +230,7 @@ def two_gaussians(naxis1,naxis2,result_list,results_dir,lam_r):
     fits.writeto(results_dir+'/residuals.fits',residualsm,overwrite=True)
     fits.writeto(results_dir+'/redchi.fits',redchi,overwrite=True)
     fits.writeto(results_dir+'/redchi_w.fits',redchi_w,overwrite=True)
+    fits.writeto(results_dir+'/bic.fits',bic,overwrite=True)
 
     xm = np.ravel(xm)
     ym = np.ravel(ym)
@@ -336,6 +342,7 @@ def two_gaussians_cons(naxis1,naxis2,result_list,results_dir,lam_r):
     residualsm = np.zeros([naxis2,naxis1])
     redchi = np.zeros([naxis2,naxis1])
     redchi_w = np.zeros([naxis2,naxis1])
+    bic = np.zeros([naxis2,naxis1])
     
     residual = np.zeros([len(results[0,0].residual),naxis2,naxis1])
     model = np.zeros([len(results[0,0].residual),naxis2,naxis1])
@@ -361,6 +368,7 @@ def two_gaussians_cons(naxis1,naxis2,result_list,results_dir,lam_r):
             residualsm[j,i] = np.abs(np.sum(results[j,i].residual))
             redchi[j,i] = results[j,i].redchi
             redchi_w[j,i] = results[j,i].redchi*np.abs(residualsm[j,i])
+            bic[j,i] = results[j,i].bic
             
             residual[:,j,i] = results[j,i].residual
             data[:,j,i] = results[j,i].data
@@ -380,6 +388,7 @@ def two_gaussians_cons(naxis1,naxis2,result_list,results_dir,lam_r):
     fits.writeto(results_dir+'/residuals.fits',residualsm,overwrite=True)
     fits.writeto(results_dir+'/redchi.fits',redchi,overwrite=True)
     fits.writeto(results_dir+'/redchi_w.fits',redchi_w,overwrite=True)
+    fits.writeto(results_dir+'/bic.fits',bic,overwrite=True)
 
     xm = np.ravel(xm)
     ym = np.ravel(ym)
@@ -574,6 +583,9 @@ def two_gaussians_2g_cons_o1(naxis1,naxis2,result_list,results_dir,lam_r,ncomps_
     sigm_b_err = np.ravel(sigm_b_err)
     
     residualsm = np.ravel(residualsm)
+    redchi = np.zeros([naxis2,naxis1])
+    redchi_w = np.zeros([naxis2,naxis1])
+    bic = np.zeros([naxis2,naxis1])
 
     class t_res(tables.IsDescription):
         
@@ -858,6 +870,7 @@ def two_gaussians_cons_s2(naxis1,naxis2,result_list,results_dir,lam_r):
     residualsm = np.zeros([naxis2,naxis1])
     redchi = np.zeros([naxis2,naxis1])
     redchi_w = np.zeros([naxis2,naxis1])
+    bic = np.zeros([naxis2,naxis1])
     
     residual = np.zeros([len(results[0,0].residual),naxis2,naxis1])
     model = np.zeros([len(results[0,0].residual),naxis2,naxis1])
@@ -885,6 +898,7 @@ def two_gaussians_cons_s2(naxis1,naxis2,result_list,results_dir,lam_r):
             residualsm[j,i] = np.abs(np.sum(results[j,i].residual))
             redchi[j,i] = results[j,i].redchi
             redchi_w[j,i] = results[j,i].redchi*np.abs(residualsm[j,i])
+            bic[j,i] = results[j,i].bic
                         
             residual[:,j,i] = results[j,i].residual
             data[:,j,i] = results[j,i].data
@@ -906,6 +920,7 @@ def two_gaussians_cons_s2(naxis1,naxis2,result_list,results_dir,lam_r):
     fits.writeto(results_dir+'/residuals.fits',residualsm,overwrite=True)
     fits.writeto(results_dir+'/redchi.fits',redchi,overwrite=True)
     fits.writeto(results_dir+'/redchi_w.fits',redchi_w,overwrite=True)
+    fits.writeto(results_dir+'/bic.fits',bic,overwrite=True)
 
     xm = np.ravel(xm)
     ym = np.ravel(ym)
@@ -1233,6 +1248,7 @@ def three_gaussians(naxis1,naxis2,result_list,results_dir,lam_r):
     residualsm = np.zeros([naxis2,naxis1])
     redchi = np.zeros([naxis2,naxis1])
     redchi_w = np.zeros([naxis2,naxis1])
+    bic = np.zeros([naxis2,naxis1])
     
     residual = np.zeros([len(results[0,0].residual),naxis2,naxis1])
     model = np.zeros([len(results[0,0].residual),naxis2,naxis1])
@@ -1270,6 +1286,7 @@ def three_gaussians(naxis1,naxis2,result_list,results_dir,lam_r):
             residualsm[j,i] = np.abs(np.sum(results[j,i].residual))
             redchi[j,i] = results[j,i].redchi
             redchi_w[j,i] = results[j,i].redchi*np.abs(residualsm[j,i])
+            bic[j,i] = results[j,i].bic
             
             residual[:,j,i] = results[j,i].residual
             data[:,j,i] = results[j,i].data
@@ -1301,6 +1318,7 @@ def three_gaussians(naxis1,naxis2,result_list,results_dir,lam_r):
     fits.writeto(results_dir+'/residuals.fits',residualsm,overwrite=True)
     fits.writeto(results_dir+'/redchi.fits',redchi,overwrite=True)
     fits.writeto(results_dir+'/redchi_w.fits',redchi_w,overwrite=True)
+    fits.writeto(results_dir+'/bic.fits',bic,overwrite=True)
 
     xm = np.ravel(xm)
     ym = np.ravel(ym)
@@ -1330,6 +1348,9 @@ def three_gaussians(naxis1,naxis2,result_list,results_dir,lam_r):
     sigm3_err = np.ravel(sigm3_err)
     
     residualsm = np.ravel(residualsm)
+    redchi = np.zeros([naxis2,naxis1])
+    redchi_w = np.zeros([naxis2,naxis1])
+    bic = np.zeros([naxis2,naxis1])
 
     class t_res(tables.IsDescription):
         
@@ -1432,6 +1453,7 @@ def three_gaussians_cons(naxis1,naxis2,result_list,results_dir,lam_r):
     residualsm = np.zeros([naxis2,naxis1])
     redchi = np.zeros([naxis2,naxis1])
     redchi_w = np.zeros([naxis2,naxis1])
+    bic = np.zeros([naxis2,naxis1])
     
     residual = np.zeros([len(results[0,0].residual),naxis2,naxis1])
     model = np.zeros([len(results[0,0].residual),naxis2,naxis1])
@@ -1459,6 +1481,7 @@ def three_gaussians_cons(naxis1,naxis2,result_list,results_dir,lam_r):
             residualsm[j,i] = np.abs(np.sum(results[j,i].residual))
             redchi[j,i] = results[j,i].redchi
             redchi_w[j,i] = results[j,i].redchi*np.abs(residualsm[j,i])
+            bic[j,i] = results[j,i].bic
                         
             residual[:,j,i] = results[j,i].residual
             data[:,j,i] = results[j,i].data
@@ -1480,6 +1503,7 @@ def three_gaussians_cons(naxis1,naxis2,result_list,results_dir,lam_r):
     fits.writeto(results_dir+'/residuals.fits',residualsm,overwrite=True)
     fits.writeto(results_dir+'/redchi.fits',redchi,overwrite=True)
     fits.writeto(results_dir+'/redchi_w.fits',redchi_w,overwrite=True)
+    fits.writeto(results_dir+'/bic.fits',bic,overwrite=True)
 
     xm = np.ravel(xm)
     ym = np.ravel(ym)
@@ -1696,6 +1720,9 @@ def three_gaussians_2g_cons(naxis1,naxis2,result_list,results_dir,lam_r,ncomps_f
     sigm_b_err = np.ravel(sigm_b_err)
     
     residualsm = np.ravel(residualsm)
+    redchi = np.zeros([naxis2,naxis1])
+    redchi_w = np.zeros([naxis2,naxis1])
+    bic = np.zeros([naxis2,naxis1])
 
     class t_res(tables.IsDescription):
         
@@ -1802,6 +1829,7 @@ def hb_ha_n2_gaussians_cons(naxis1,naxis2,result_list,results_dir,lam_r):
     residualsm = np.zeros([naxis2,naxis1])
     redchi = np.zeros([naxis2,naxis1])
     redchi_w = np.zeros([naxis2,naxis1])
+    bic = np.zeros([naxis2,naxis1])
     
     residual = np.zeros([len(results[0,0].residual),naxis2,naxis1])
     model = np.zeros([len(results[0,0].residual),naxis2,naxis1])
@@ -1835,6 +1863,7 @@ def hb_ha_n2_gaussians_cons(naxis1,naxis2,result_list,results_dir,lam_r):
             residualsm[j,i] = np.abs(np.sum(results[j,i].residual))
             redchi[j,i] = results[j,i].redchi
             redchi_w[j,i] = results[j,i].redchi*np.abs(residualsm[j,i])
+            bic[j,i] = results[j,i].bic
                         
             residual[:,j,i] = results[j,i].residual
             data[:,j,i] = results[j,i].data
@@ -1859,9 +1888,6 @@ def hb_ha_n2_gaussians_cons(naxis1,naxis2,result_list,results_dir,lam_r):
     fits.writeto(results_dir+'/redchi.fits',redchi,overwrite=True)
     fits.writeto(results_dir+'/redchi_w.fits',redchi_w,overwrite=True)
     fits.writeto(results_dir+'/bic.fits',bic,overwrite=True)
-    
-    fits.writeto(results_dir+'/ncomps_flag.fits',ncomps_flag,overwrite=True)
-    fits.writeto(results_dir+'/bic_flag.fits',bic_flag,overwrite=True)
 
     xm = np.ravel(xm)
     ym = np.ravel(ym)

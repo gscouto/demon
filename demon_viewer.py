@@ -14,7 +14,7 @@ from matplotlib.colors import LogNorm
 import matplotlib.patches as patches
 import os
 
-dir = 'HATLASJ085828/Hb_Ha_N2_vorbin10/'
+dir = '/home/guilherme/oso/vales_sample2/EL_measurements/HATLASJ114244/s2_cons_2021-07-01_23.26.17/'
 
 fit_results = h5py.File(dir+'fit.hdf5', 'r')
 t = tables.open_file(dir+'results.h5')
@@ -24,7 +24,7 @@ def update_plot():
     x = int(x1.get())
     y = int(y1.get())
     
-    if 'Hb_Ha_N2' in dir:
+    if ('Hb_Ha_N2' in dir) or ('hb_ha_n2' in dir):
 
         ax1.clear()
         ax1.set_title('x = '+str(x)+', y = '+str(y))
@@ -61,17 +61,17 @@ def update_plot():
 
         ax1.clear()
         ax1.set_title('x = '+str(x)+', y = '+str(y))
-        ax1.plot(fit_results['lam'],fit_results['data'][:,y,x],'.')
-        ax1.plot(fit_results['lam'],fit_results['data'][:,y,x],color='black')
-        ax1.plot(fit_results['lam'],fit_results['model'][:,y,x],color='red')
+        ax1.plot(fit_results['lam'][:],fit_results['data'][:,y,x],'.')
+        ax1.plot(fit_results['lam'][:],fit_results['data'][:,y,x],color='black')
+        ax1.plot(fit_results['lam'][:],fit_results['model'][:,y,x],color='red')
         if '2g' in dir:
-            ax1.plot(fit_results['lam'],fit_results['model_2g_n'][:,y,x],'--',color='green',linewidth=0.7)
-            ax1.plot(fit_results['lam'],fit_results['model_2g_b'][:,y,x],'--',color='blue',linewidth=0.7)
+            ax1.plot(fit_results['lam'][:],fit_results['model_2g_n'][:,y,x],'--',color='green',linewidth=0.7)
+            ax1.plot(fit_results['lam'][:],fit_results['model_2g_b'][:,y,x],'--',color='blue',linewidth=0.7)
         ax1.xaxis.set_major_formatter( NullFormatter() )
         ax1.grid(True,alpha=0.3)
         
         ax2.clear()
-        ax2.plot(fit_results['lam'],fit_results['residual'][:,y,x])
+        ax2.plot(fit_results['lam'][:],fit_results['residual'][:,y,x])
         ax2.grid(True,alpha=0.3)
     
     
@@ -114,12 +114,12 @@ def change_map(map_name=None):
     if 'sig' in map_name:
         im.set_cmap('hot')
         im.set_clim(vmin=30.,vmax=100.)
-        im.set_norm(None)
+        #im.set_norm(None)
         
     if 'vel' in map_name:
         im.set_cmap('jet')
         im.set_clim(vmin=-np.nanmax(abs(map_z)),vmax=np.nanmax(abs(map_z)))
-        im.set_norm(None)
+        #im.set_norm(None)
         
     if 'residuals' in map_name:
         im.set_cmap('viridis')
@@ -186,7 +186,7 @@ b_update = Button(window,text='Update Spectra', command=update_plot)
 
 b_quit = Button(window,text='Quit', command=close_window)
 
-if 'Hb_Ha_N2' in dir:
+if ('Hb_Ha_N2' in dir) or ('hb_ha_n2' in dir):
 
     fig = plt.figure(figsize=(15,3))
 
@@ -238,17 +238,17 @@ else:
 
     ax1 = plt.subplot(gs[0,0])
     ax1.set_title('x = '+str(x)+', y = '+str(y))
-    ax1.plot(fit_results['lam'],fit_results['data'][:,y,x],'.')
-    ax1.plot(fit_results['lam'],fit_results['data'][:,y,x],color='black')
-    ax1.plot(fit_results['lam'],fit_results['model'][:,y,x],color='red')
+    ax1.plot(fit_results['lam'][:],fit_results['data'][:,y,x],'.')
+    ax1.plot(fit_results['lam'][:],fit_results['data'][:,y,x],color='black')
+    ax1.plot(fit_results['lam'][:],fit_results['model'][:,y,x],color='red')
     if '2g' in dir:
-        ax1.plot(fit_results['lam'],fit_results['model_2g_n'][:,y,x],'--',color='green',linewidth=0.7)
-        ax1.plot(fit_results['lam'],fit_results['model_2g_b'][:,y,x],'--',color='blue',linewidth=0.7)
+        ax1.plot(fit_results['lam'][:],fit_results['model_2g_n'][:,y,x],'--',color='green',linewidth=0.7)
+        ax1.plot(fit_results['lam'][:],fit_results['model_2g_b'][:,y,x],'--',color='blue',linewidth=0.7)
     ax1.xaxis.set_major_formatter( NullFormatter() )
     ax1.grid(True,alpha=0.3)
 
     ax2 = plt.subplot(gs[1,0])
-    ax2.plot(fit_results['lam'],fit_results['residual'][:,y,x])
+    ax2.plot(fit_results['lam'][:],fit_results['residual'][:,y,x])
     ax2.grid(True,alpha=0.3)
 
     plot_canvas = FigureCanvasTkAgg(fig, master=window)

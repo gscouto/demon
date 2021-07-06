@@ -1,6 +1,6 @@
 import numpy as np
 from astropy.constants import c
-from line_fit_config import *
+from demon_config import *
 
 c = c.value/1000.
 

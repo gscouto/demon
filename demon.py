@@ -6,6 +6,8 @@ import fit_functions
 import output
 import refit
 import more_comps
+from demon_config import *
+
 from astropy.io import fits
 from astropy.table import Table, vstack,hstack
 import numpy as np
@@ -23,7 +25,6 @@ import sys
 import warnings
 import gc
 import psutil
-from line_fit_config import *
 
 def forloop(args):
     
@@ -51,12 +52,11 @@ def forloop(args):
 
     return (result)
 
-print('--------------------------------------------------------------------------------------------------------------------------------------------------')
+print('---------------------------------------')
 print('')
-print('Welcome to linefit (working name), the soon to be the best line fitting code in the universe (also one of the most modest, but not quite the most)')
-print('Please hang in tight, your plotted lines will be ready shortly (grab a coffee if you asked for many galaxies/lines)')
+print('Datacube EMissiON-line fitter (DEMON)')
 print('')
-print('--------------------------------------------------------------------------------------------------------------------------------------------------')
+print('--------------------------------------')
 
 warnings.filterwarnings("ignore")
 

@@ -1,6 +1,6 @@
 import numpy as np
 import sys
-from line_fit_config import *
+from demon_config import *
 
 def one_gaussian(naxis1,naxis2,result_list,results_dir,lam_r,params,gmodel):
 
