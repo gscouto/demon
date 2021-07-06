@@ -14,7 +14,7 @@ from matplotlib.colors import LogNorm
 import matplotlib.patches as patches
 import os
 
-dir = '/home/guilherme/oso/vales_sample2/EL_measurements/HATLASJ114244/s2_cons_2021-07-01_23.26.17/'
+dir = '/home/guilherme/bolsa/muse_cubes/EL_fits/HATLASJ083601/hb_ha_n2_cons_2021-07-06_10.27.48/'
 
 fit_results = h5py.File(dir+'fit.hdf5', 'r')
 t = tables.open_file(dir+'results.h5')
@@ -146,7 +146,7 @@ map_z = np.zeros([np.max(y_t)+1,np.max(x_t)+1])
 
 window = Tk()
 window.title('linefit plotter')
-#window.geometry('1500x500')
+window.geometry('1500x900')
 window.configure(background='white')
 
 x = int(fit_results['data'].shape[2]/2.)
@@ -155,7 +155,7 @@ y = int(fit_results['data'].shape[1]/2.)
 x1 = x
 y1 = y
 
-fig, (ax1) = plt.subplots(figsize=(8,6),ncols=1)
+fig, (ax1) = plt.subplots(figsize=(3,2),ncols=1)
 im = ax1.imshow(map_z,origin='lower',vmin=np.nanmin(map_z),vmax=np.nanmax(map_z))
 
 #rect = patches.Rectangle((y,x),1,1,linewidth=1,edgecolor='r',facecolor='none')
@@ -188,10 +188,10 @@ b_quit = Button(window,text='Quit', command=close_window)
 
 if ('Hb_Ha_N2' in dir) or ('hb_ha_n2' in dir):
 
-    fig = plt.figure(figsize=(15,3))
+    fig = plt.figure(figsize=(7,2))
 
     gs = gridspec.GridSpec(2,2, height_ratios=[1,0.5], width_ratios=[1,1])
-    gs.update(left=0.07, right=0.92, bottom=0.1, top=0.90, wspace=0.0, hspace=0.0)
+    gs.update(left=0.07, right=0.92, bottom=0.13, top=0.85, wspace=0.0, hspace=0.0)
     props = dict(boxstyle='round', facecolor='wheat', alpha=0.5)
 
     ax1 = plt.subplot(gs[0,0])
@@ -230,10 +230,10 @@ if ('Hb_Ha_N2' in dir) or ('hb_ha_n2' in dir):
     
 else:
     
-    fig = plt.figure(figsize=(15,3))
+    fig = plt.figure(figsize=(7,2))
 
     gs = gridspec.GridSpec(2,1, height_ratios=[1,0.5], width_ratios=[1])
-    gs.update(left=0.07, right=0.92, bottom=0.1, top=0.90, wspace=0.2, hspace=0.0)
+    gs.update(left=0.07, right=0.92, bottom=0.13, top=0.85, wspace=0.2, hspace=0.0)
     props = dict(boxstyle='round', facecolor='wheat', alpha=0.5)
 
     ax1 = plt.subplot(gs[0,0])
