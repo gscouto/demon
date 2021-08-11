@@ -20,7 +20,7 @@ aut_ini = 'no'              # initial parameters set by the code based on a prel
 
 hahb_flag = 'no'            # should the second component fit constrain the Ha/Hb ratio as the same as the first component? / 'yes' or 'no' [NOT IMPLEMENTED YET]
 
-ids = ['HATLASJ083601']     # names of the galaxies to be fitted (they must match the name of the datacube file, ex: 'NGC1097'+.fits)
+ids = ['HATLASJ090750','HATLASJ085835','HATLASJ090532','HATLASJ090949']     # names of the galaxies to be fitted (they must match the name of the datacube file, ex: 'NGC1097'+.fits)
 
 ##### SPECTRA DEFINITIONS
 
@@ -46,13 +46,13 @@ init_params = {
 'flux' : 500.,              # initial guess (IG) for the integrated flux of the (main) emission line
 'flux_min' : 0.0,           # minimum value
 
-'vel' : 0.,
+'vel' : 50.,
 'vel_min' : -400.,
 'vel_max' : 400.,
 
 'sig' : 60.,
 'sig_min' : 10.0,
-'sig_max' : 120.,
+'sig_max' : 200.,
 
 'n2_ha_ratio' : 0.5,
 'n2_ha_ratio_min' : 0.01,
@@ -75,8 +75,8 @@ init_params = {
 'sig_delta_max' : 3.,
 
 'vel_delta' : 0.,           # [USED IN MORE COMPS] relation between narrow and broad velocity components: vel_delta = vel_narrow - vel_broad 
-'vel_delta_min' : -200.,
-'vel_delta_max' : 200.
+'vel_delta_min' : -300.,
+'vel_delta_max' : 300.
 
 }
 
