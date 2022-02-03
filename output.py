@@ -7,7 +7,7 @@ from demon_config import *
 
 c = c.value/1000.
 
-def one_gaussian(naxis1,naxis2,result_list,results_dir,lam_r):
+def one_gaussian(naxis1,naxis2,result_list,results_dir,lam_r,hdr):
 
     results = np.reshape(result_list, (naxis2,naxis1))
 
@@ -61,18 +61,18 @@ def one_gaussian(naxis1,naxis2,result_list,results_dir,lam_r):
             xm[j,i] = i
             ym[j,i] = j
 
-    fits.writeto(results_dir+'/fluxm.fits',fluxm,overwrite=True)
-    fits.writeto(results_dir+'/velm.fits',velm,overwrite=True)
-    fits.writeto(results_dir+'/sigm.fits',sigm,overwrite=True)
+    fits.writeto(results_dir+'/fluxm.fits',fluxm,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/velm.fits',velm,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/sigm.fits',sigm,header=hdr,overwrite=True)
 
-    fits.writeto(results_dir+'/flux_err.fits',fluxm_err,overwrite=True)
-    fits.writeto(results_dir+'/vel_err.fits',velm_err,overwrite=True)
-    fits.writeto(results_dir+'/sig_err.fits',sigm_err,overwrite=True)
+    fits.writeto(results_dir+'/flux_err.fits',fluxm_err,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/vel_err.fits',velm_err,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/sig_err.fits',sigm_err,header=hdr,overwrite=True)
     
-    fits.writeto(results_dir+'/residuals.fits',residualsm,overwrite=True)
-    fits.writeto(results_dir+'/redchi.fits',redchi,overwrite=True)
-    fits.writeto(results_dir+'/redchi_w.fits',redchi_w,overwrite=True)
-    fits.writeto(results_dir+'/bic.fits',bic,overwrite=True)
+    fits.writeto(results_dir+'/residuals.fits',residualsm,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/redchi.fits',redchi,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/redchi_w.fits',redchi_w,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/bic.fits',bic,header=hdr,overwrite=True)
 
     xm = np.ravel(xm)
     ym = np.ravel(ym)
@@ -147,7 +147,7 @@ def one_gaussian(naxis1,naxis2,result_list,results_dir,lam_r):
 
     return
 
-def two_gaussians(naxis1,naxis2,result_list,results_dir,lam_r):
+def two_gaussians(naxis1,naxis2,result_list,results_dir,lam_r,hdr):
 
     results = np.reshape(result_list, (naxis2,naxis1))
 
@@ -213,24 +213,24 @@ def two_gaussians(naxis1,naxis2,result_list,results_dir,lam_r):
             xm[j,i] = i
             ym[j,i] = j
 
-    fits.writeto(results_dir+'/fluxm1.fits',fluxm1,overwrite=True)
-    fits.writeto(results_dir+'/fluxm2.fits',fluxm2,overwrite=True)
-    fits.writeto(results_dir+'/velm1.fits',velm1,overwrite=True)
-    fits.writeto(results_dir+'/velm2.fits',velm2,overwrite=True)
-    fits.writeto(results_dir+'/sigm1.fits',sigm1,overwrite=True)
-    fits.writeto(results_dir+'/sigm2.fits',sigm2,overwrite=True)
+    fits.writeto(results_dir+'/fluxm1.fits',fluxm1,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/fluxm2.fits',fluxm2,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/velm1.fits',velm1,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/velm2.fits',velm2,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/sigm1.fits',sigm1,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/sigm2.fits',sigm2,header=hdr,overwrite=True)
 
-    fits.writeto(results_dir+'/flux1_err.fits',fluxm1_err,overwrite=True)
-    fits.writeto(results_dir+'/flux2_err.fits',fluxm2_err,overwrite=True)
-    fits.writeto(results_dir+'/vel1_err.fits',velm1_err,overwrite=True)
-    fits.writeto(results_dir+'/vel2_err.fits',velm2_err,overwrite=True)
-    fits.writeto(results_dir+'/sig1_err.fits',sigm1_err,overwrite=True)
-    fits.writeto(results_dir+'/sig2_err.fits',sigm2_err,overwrite=True)
+    fits.writeto(results_dir+'/flux1_err.fits',fluxm1_err,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/flux2_err.fits',fluxm2_err,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/vel1_err.fits',velm1_err,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/vel2_err.fits',velm2_err,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/sig1_err.fits',sigm1_err,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/sig2_err.fits',sigm2_err,header=hdr,overwrite=True)
     
-    fits.writeto(results_dir+'/residuals.fits',residualsm,overwrite=True)
-    fits.writeto(results_dir+'/redchi.fits',redchi,overwrite=True)
-    fits.writeto(results_dir+'/redchi_w.fits',redchi_w,overwrite=True)
-    fits.writeto(results_dir+'/bic.fits',bic,overwrite=True)
+    fits.writeto(results_dir+'/residuals.fits',residualsm,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/redchi.fits',redchi,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/redchi_w.fits',redchi_w,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/bic.fits',bic,header=hdr,overwrite=True)
 
     xm = np.ravel(xm)
     ym = np.ravel(ym)
@@ -323,7 +323,7 @@ def two_gaussians(naxis1,naxis2,result_list,results_dir,lam_r):
 
     return
 
-def two_gaussians_cons(naxis1,naxis2,result_list,results_dir,lam_r):
+def two_gaussians_cons(naxis1,naxis2,result_list,results_dir,lam_r,hdr):
 
     results = np.reshape(result_list, (naxis2,naxis1))
 
@@ -377,18 +377,18 @@ def two_gaussians_cons(naxis1,naxis2,result_list,results_dir,lam_r):
             xm[j,i] = i
             ym[j,i] = j
 
-    fits.writeto(results_dir+'/fluxm.fits',fluxm,overwrite=True)
-    fits.writeto(results_dir+'/velm.fits',velm,overwrite=True)
-    fits.writeto(results_dir+'/sigm.fits',sigm,overwrite=True)
+    fits.writeto(results_dir+'/fluxm.fits',fluxm,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/velm.fits',velm,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/sigm.fits',sigm,header=hdr,overwrite=True)
 
-    fits.writeto(results_dir+'/flux_err.fits',fluxm_err,overwrite=True)
-    fits.writeto(results_dir+'/vel_err.fits',velm_err,overwrite=True)
-    fits.writeto(results_dir+'/sig_err.fits',sigm_err,overwrite=True)
+    fits.writeto(results_dir+'/flux_err.fits',fluxm_err,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/vel_err.fits',velm_err,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/sig_err.fits',sigm_err,header=hdr,overwrite=True)
     
-    fits.writeto(results_dir+'/residuals.fits',residualsm,overwrite=True)
-    fits.writeto(results_dir+'/redchi.fits',redchi,overwrite=True)
-    fits.writeto(results_dir+'/redchi_w.fits',redchi_w,overwrite=True)
-    fits.writeto(results_dir+'/bic.fits',bic,overwrite=True)
+    fits.writeto(results_dir+'/residuals.fits',residualsm,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/redchi.fits',redchi,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/redchi_w.fits',redchi_w,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/bic.fits',bic,header=hdr,overwrite=True)
 
     xm = np.ravel(xm)
     ym = np.ravel(ym)
@@ -539,27 +539,27 @@ def two_gaussians_2g_cons_o1(naxis1,naxis2,result_list,results_dir,lam_r,ncomps_
             ym[j,i] = j
             
 
-    fits.writeto(results_dir+'/fluxm.fits',fluxm,overwrite=True)
-    fits.writeto(results_dir+'/fluxm_b.fits',fluxm_b,overwrite=True)
-    fits.writeto(results_dir+'/velm.fits',velm,overwrite=True)
-    fits.writeto(results_dir+'/sigm.fits',sigm,overwrite=True)
-    fits.writeto(results_dir+'/velm_b.fits',velm_b,overwrite=True)
-    fits.writeto(results_dir+'/sigm_b.fits',sigm_b,overwrite=True)
+    fits.writeto(results_dir+'/fluxm.fits',fluxm,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/fluxm_b.fits',fluxm_b,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/velm.fits',velm,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/sigm.fits',sigm,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/velm_b.fits',velm_b,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/sigm_b.fits',sigm_b,header=hdr,overwrite=True)
 
-    fits.writeto(results_dir+'/flux_err.fits',fluxm_err,overwrite=True)
-    fits.writeto(results_dir+'/flux_b_err.fits',fluxm_b_err,overwrite=True)
-    fits.writeto(results_dir+'/vel_err.fits',velm_err,overwrite=True)
-    fits.writeto(results_dir+'/sig_err.fits',sigm_err,overwrite=True)
-    fits.writeto(results_dir+'/vel_b_err.fits',velm_b_err,overwrite=True)
-    fits.writeto(results_dir+'/sig_b_err.fits',sigm_b_err,overwrite=True)
+    fits.writeto(results_dir+'/flux_err.fits',fluxm_err,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/flux_b_err.fits',fluxm_b_err,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/vel_err.fits',velm_err,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/sig_err.fits',sigm_err,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/vel_b_err.fits',velm_b_err,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/sig_b_err.fits',sigm_b_err,header=hdr,overwrite=True)
     
-    fits.writeto(results_dir+'/residuals.fits',residualsm,overwrite=True)
-    fits.writeto(results_dir+'/redchi.fits',redchi,overwrite=True)
-    fits.writeto(results_dir+'/redchi_w.fits',redchi_w,overwrite=True)
-    fits.writeto(results_dir+'/bic.fits',bic,overwrite=True)
+    fits.writeto(results_dir+'/residuals.fits',residualsm,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/redchi.fits',redchi,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/redchi_w.fits',redchi_w,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/bic.fits',bic,header=hdr,overwrite=True)
     
-    fits.writeto(results_dir+'/ncomps_flag.fits',ncomps_flag,overwrite=True)
-    fits.writeto(results_dir+'/bic_flag.fits',bic_flag,overwrite=True)
+    fits.writeto(results_dir+'/ncomps_flag.fits',ncomps_flag,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/bic_flag.fits',bic_flag,header=hdr,overwrite=True)
 
     xm = np.ravel(xm)
     ym = np.ravel(ym)
@@ -734,27 +734,27 @@ def two_gaussians_2g_cons_o3(naxis1,naxis2,result_list,results_dir,lam_r,ncomps_
             ym[j,i] = j
             
 
-    fits.writeto(results_dir+'/fluxm.fits',fluxm,overwrite=True)
-    fits.writeto(results_dir+'/fluxm_b.fits',fluxm_b,overwrite=True)
-    fits.writeto(results_dir+'/velm.fits',velm,overwrite=True)
-    fits.writeto(results_dir+'/sigm.fits',sigm,overwrite=True)
-    fits.writeto(results_dir+'/velm_b.fits',velm_b,overwrite=True)
-    fits.writeto(results_dir+'/sigm_b.fits',sigm_b,overwrite=True)
+    fits.writeto(results_dir+'/fluxm.fits',fluxm,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/fluxm_b.fits',fluxm_b,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/velm.fits',velm,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/sigm.fits',sigm,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/velm_b.fits',velm_b,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/sigm_b.fits',sigm_b,header=hdr,overwrite=True)
 
-    fits.writeto(results_dir+'/flux_err.fits',fluxm_err,overwrite=True)
-    fits.writeto(results_dir+'/flux_b_err.fits',fluxm_b_err,overwrite=True)
-    fits.writeto(results_dir+'/vel_err.fits',velm_err,overwrite=True)
-    fits.writeto(results_dir+'/sig_err.fits',sigm_err,overwrite=True)
-    fits.writeto(results_dir+'/vel_b_err.fits',velm_b_err,overwrite=True)
-    fits.writeto(results_dir+'/sig_b_err.fits',sigm_b_err,overwrite=True)
+    fits.writeto(results_dir+'/flux_err.fits',fluxm_err,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/flux_b_err.fits',fluxm_b_err,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/vel_err.fits',velm_err,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/sig_err.fits',sigm_err,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/vel_b_err.fits',velm_b_err,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/sig_b_err.fits',sigm_b_err,header=hdr,overwrite=True)
     
-    fits.writeto(results_dir+'/residuals.fits',residualsm,overwrite=True)
-    fits.writeto(results_dir+'/redchi.fits',redchi,overwrite=True)
-    fits.writeto(results_dir+'/redchi_w.fits',redchi_w,overwrite=True)
-    fits.writeto(results_dir+'/bic.fits',bic,overwrite=True)
+    fits.writeto(results_dir+'/residuals.fits',residualsm,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/redchi.fits',redchi,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/redchi_w.fits',redchi_w,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/bic.fits',bic,header=hdr,overwrite=True)
     
-    fits.writeto(results_dir+'/ncomps_flag.fits',ncomps_flag,overwrite=True)
-    fits.writeto(results_dir+'/bic_flag.fits',bic_flag,overwrite=True)
+    fits.writeto(results_dir+'/ncomps_flag.fits',ncomps_flag,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/bic_flag.fits',bic_flag,header=hdr,overwrite=True)
 
     xm = np.ravel(xm)
     ym = np.ravel(ym)
@@ -849,7 +849,7 @@ def two_gaussians_2g_cons_o3(naxis1,naxis2,result_list,results_dir,lam_r,ncomps_
 
     return
 
-def two_gaussians_cons_s2(naxis1,naxis2,result_list,results_dir,lam_r):
+def two_gaussians_cons_s2(naxis1,naxis2,result_list,results_dir,lam_r,hdr):
 
     results = np.reshape(result_list, (naxis2,naxis1))
 
@@ -907,20 +907,20 @@ def two_gaussians_cons_s2(naxis1,naxis2,result_list,results_dir,lam_r):
             xm[j,i] = i
             ym[j,i] = j
 
-    fits.writeto(results_dir+'/fluxm1.fits',fluxm1,overwrite=True)
-    fits.writeto(results_dir+'/fluxm2.fits',fluxm2,overwrite=True)
-    fits.writeto(results_dir+'/velm.fits',velm,overwrite=True)
-    fits.writeto(results_dir+'/sigm.fits',sigm,overwrite=True)
+    fits.writeto(results_dir+'/fluxm1.fits',fluxm1,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/fluxm2.fits',fluxm2,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/velm.fits',velm,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/sigm.fits',sigm,header=hdr,overwrite=True)
 
-    fits.writeto(results_dir+'/flux1_err.fits',fluxm1_err,overwrite=True)
-    fits.writeto(results_dir+'/flux2_err.fits',fluxm2_err,overwrite=True)
-    fits.writeto(results_dir+'/vel_err.fits',velm_err,overwrite=True)
-    fits.writeto(results_dir+'/sig_err.fits',sigm_err,overwrite=True)
+    fits.writeto(results_dir+'/flux1_err.fits',fluxm1_err,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/flux2_err.fits',fluxm2_err,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/vel_err.fits',velm_err,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/sig_err.fits',sigm_err,header=hdr,overwrite=True)
     
-    fits.writeto(results_dir+'/residuals.fits',residualsm,overwrite=True)
-    fits.writeto(results_dir+'/redchi.fits',redchi,overwrite=True)
-    fits.writeto(results_dir+'/redchi_w.fits',redchi_w,overwrite=True)
-    fits.writeto(results_dir+'/bic.fits',bic,overwrite=True)
+    fits.writeto(results_dir+'/residuals.fits',residualsm,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/redchi.fits',redchi,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/redchi_w.fits',redchi_w,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/bic.fits',bic,header=hdr,overwrite=True)
 
     xm = np.ravel(xm)
     ym = np.ravel(ym)
@@ -1085,31 +1085,31 @@ def two_gaussians_2g_cons_s2(naxis1,naxis2,result_list,results_dir,lam_r,ncomps_
             ym[j,i] = j
             
 
-    fits.writeto(results_dir+'/fluxm1.fits',fluxm1,overwrite=True)
-    fits.writeto(results_dir+'/fluxm2.fits',fluxm2,overwrite=True)
-    fits.writeto(results_dir+'/fluxm1_b.fits',fluxm1_b,overwrite=True)
-    fits.writeto(results_dir+'/fluxm2_b.fits',fluxm2_b,overwrite=True)
-    fits.writeto(results_dir+'/velm.fits',velm,overwrite=True)
-    fits.writeto(results_dir+'/sigm.fits',sigm,overwrite=True)
-    fits.writeto(results_dir+'/velm_b.fits',velm_b,overwrite=True)
-    fits.writeto(results_dir+'/sigm_b.fits',sigm_b,overwrite=True)
+    fits.writeto(results_dir+'/fluxm1.fits',fluxm1,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/fluxm2.fits',fluxm2,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/fluxm1_b.fits',fluxm1_b,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/fluxm2_b.fits',fluxm2_b,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/velm.fits',velm,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/sigm.fits',sigm,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/velm_b.fits',velm_b,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/sigm_b.fits',sigm_b,header=hdr,overwrite=True)
 
-    fits.writeto(results_dir+'/flux1_err.fits',fluxm1_err,overwrite=True)
-    fits.writeto(results_dir+'/flux2_err.fits',fluxm2_err,overwrite=True)
-    fits.writeto(results_dir+'/flux1_b_err.fits',fluxm1_b_err,overwrite=True)
-    fits.writeto(results_dir+'/flux2_b_err.fits',fluxm2_b_err,overwrite=True)
-    fits.writeto(results_dir+'/vel_err.fits',velm_err,overwrite=True)
-    fits.writeto(results_dir+'/sig_err.fits',sigm_err,overwrite=True)
-    fits.writeto(results_dir+'/vel_b_err.fits',velm_b_err,overwrite=True)
-    fits.writeto(results_dir+'/sig_b_err.fits',sigm_b_err,overwrite=True)
+    fits.writeto(results_dir+'/flux1_err.fits',fluxm1_err,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/flux2_err.fits',fluxm2_err,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/flux1_b_err.fits',fluxm1_b_err,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/flux2_b_err.fits',fluxm2_b_err,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/vel_err.fits',velm_err,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/sig_err.fits',sigm_err,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/vel_b_err.fits',velm_b_err,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/sig_b_err.fits',sigm_b_err,header=hdr,overwrite=True)
     
-    fits.writeto(results_dir+'/residuals.fits',residualsm,overwrite=True)
-    fits.writeto(results_dir+'/redchi.fits',redchi,overwrite=True)
-    fits.writeto(results_dir+'/redchi_w.fits',redchi_w,overwrite=True)
-    fits.writeto(results_dir+'/bic.fits',bic,overwrite=True)
+    fits.writeto(results_dir+'/residuals.fits',residualsm,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/redchi.fits',redchi,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/redchi_w.fits',redchi_w,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/bic.fits',bic,header=hdr,overwrite=True)
     
-    fits.writeto(results_dir+'/ncomps_flag.fits',ncomps_flag,overwrite=True)
-    fits.writeto(results_dir+'/bic_flag.fits',bic_flag,overwrite=True)
+    fits.writeto(results_dir+'/ncomps_flag.fits',ncomps_flag,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/bic_flag.fits',bic_flag,header=hdr,overwrite=True)
 
     xm = np.ravel(xm)
     ym = np.ravel(ym)
@@ -1217,7 +1217,7 @@ def two_gaussians_2g_cons_s2(naxis1,naxis2,result_list,results_dir,lam_r,ncomps_
     return
 
 
-def three_gaussians(naxis1,naxis2,result_list,results_dir,lam_r):
+def three_gaussians(naxis1,naxis2,result_list,results_dir,lam_r,hdr):
 
     results = np.reshape(result_list, (naxis2,naxis1))
 
@@ -1295,30 +1295,30 @@ def three_gaussians(naxis1,naxis2,result_list,results_dir,lam_r):
             xm[j,i] = i
             ym[j,i] = j
 
-    fits.writeto(results_dir+'/fluxm1.fits',fluxm1,overwrite=True)
-    fits.writeto(results_dir+'/fluxm2.fits',fluxm2,overwrite=True)
-    fits.writeto(results_dir+'/fluxm3.fits',fluxm3,overwrite=True)
-    fits.writeto(results_dir+'/velm1.fits',velm1,overwrite=True)
-    fits.writeto(results_dir+'/velm2.fits',velm2,overwrite=True)
-    fits.writeto(results_dir+'/velm3.fits',velm3,overwrite=True)
-    fits.writeto(results_dir+'/sigm1.fits',sigm1,overwrite=True)
-    fits.writeto(results_dir+'/sigm2.fits',sigm2,overwrite=True)
-    fits.writeto(results_dir+'/sigm3.fits',sigm3,overwrite=True)
+    fits.writeto(results_dir+'/fluxm1.fits',fluxm1,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/fluxm2.fits',fluxm2,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/fluxm3.fits',fluxm3,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/velm1.fits',velm1,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/velm2.fits',velm2,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/velm3.fits',velm3,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/sigm1.fits',sigm1,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/sigm2.fits',sigm2,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/sigm3.fits',sigm3,header=hdr,overwrite=True)
 
-    fits.writeto(results_dir+'/flux1_err.fits',fluxm1_err,overwrite=True)
-    fits.writeto(results_dir+'/flux2_err.fits',fluxm2_err,overwrite=True)
-    fits.writeto(results_dir+'/flux3_err.fits',fluxm3_err,overwrite=True)
-    fits.writeto(results_dir+'/vel1_err.fits',velm1_err,overwrite=True)
-    fits.writeto(results_dir+'/vel2_err.fits',velm2_err,overwrite=True)
-    fits.writeto(results_dir+'/vel3_err.fits',velm3_err,overwrite=True)
-    fits.writeto(results_dir+'/sig1_err.fits',sigm1_err,overwrite=True)
-    fits.writeto(results_dir+'/sig2_err.fits',sigm2_err,overwrite=True)
-    fits.writeto(results_dir+'/sig3_err.fits',sigm3_err,overwrite=True)
+    fits.writeto(results_dir+'/flux1_err.fits',fluxm1_err,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/flux2_err.fits',fluxm2_err,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/flux3_err.fits',fluxm3_err,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/vel1_err.fits',velm1_err,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/vel2_err.fits',velm2_err,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/vel3_err.fits',velm3_err,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/sig1_err.fits',sigm1_err,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/sig2_err.fits',sigm2_err,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/sig3_err.fits',sigm3_err,header=hdr,overwrite=True)
     
-    fits.writeto(results_dir+'/residuals.fits',residualsm,overwrite=True)
-    fits.writeto(results_dir+'/redchi.fits',redchi,overwrite=True)
-    fits.writeto(results_dir+'/redchi_w.fits',redchi_w,overwrite=True)
-    fits.writeto(results_dir+'/bic.fits',bic,overwrite=True)
+    fits.writeto(results_dir+'/residuals.fits',residualsm,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/redchi.fits',redchi,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/redchi_w.fits',redchi_w,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/bic.fits',bic,header=hdr,overwrite=True)
 
     xm = np.ravel(xm)
     ym = np.ravel(ym)
@@ -1432,7 +1432,7 @@ def three_gaussians(naxis1,naxis2,result_list,results_dir,lam_r):
 
     return
 
-def three_gaussians_cons(naxis1,naxis2,result_list,results_dir,lam_r):
+def three_gaussians_cons(naxis1,naxis2,result_list,results_dir,lam_r,hdr):
 
     results = np.reshape(result_list, (naxis2,naxis1))
 
@@ -1490,20 +1490,20 @@ def three_gaussians_cons(naxis1,naxis2,result_list,results_dir,lam_r):
             xm[j,i] = i
             ym[j,i] = j
 
-    fits.writeto(results_dir+'/fluxm2.fits',fluxm2,overwrite=True)
-    fits.writeto(results_dir+'/fluxm3.fits',fluxm3,overwrite=True)
-    fits.writeto(results_dir+'/velm.fits',velm,overwrite=True)
-    fits.writeto(results_dir+'/sigm.fits',sigm,overwrite=True)
+    fits.writeto(results_dir+'/fluxm2.fits',fluxm2,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/fluxm3.fits',fluxm3,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/velm.fits',velm,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/sigm.fits',sigm,header=hdr,overwrite=True)
 
-    fits.writeto(results_dir+'/flux2_err.fits',fluxm2_err,overwrite=True)
-    fits.writeto(results_dir+'/flux3_err.fits',fluxm3_err,overwrite=True)
-    fits.writeto(results_dir+'/vel_err.fits',velm_err,overwrite=True)
-    fits.writeto(results_dir+'/sig_err.fits',sigm_err,overwrite=True)
+    fits.writeto(results_dir+'/flux2_err.fits',fluxm2_err,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/flux3_err.fits',fluxm3_err,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/vel_err.fits',velm_err,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/sig_err.fits',sigm_err,header=hdr,overwrite=True)
     
-    fits.writeto(results_dir+'/residuals.fits',residualsm,overwrite=True)
-    fits.writeto(results_dir+'/redchi.fits',redchi,overwrite=True)
-    fits.writeto(results_dir+'/redchi_w.fits',redchi_w,overwrite=True)
-    fits.writeto(results_dir+'/bic.fits',bic,overwrite=True)
+    fits.writeto(results_dir+'/residuals.fits',residualsm,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/redchi.fits',redchi,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/redchi_w.fits',redchi_w,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/bic.fits',bic,header=hdr,overwrite=True)
 
     xm = np.ravel(xm)
     ym = np.ravel(ym)
@@ -1668,31 +1668,31 @@ def three_gaussians_2g_cons(naxis1,naxis2,result_list,results_dir,lam_r,ncomps_f
             ym[j,i] = j
             
 
-    fits.writeto(results_dir+'/fluxm2.fits',fluxm2,overwrite=True)
-    fits.writeto(results_dir+'/fluxm3.fits',fluxm3,overwrite=True)
-    fits.writeto(results_dir+'/fluxm2_b.fits',fluxm2_b,overwrite=True)
-    fits.writeto(results_dir+'/fluxm3_b.fits',fluxm3_b,overwrite=True)
-    fits.writeto(results_dir+'/velm.fits',velm,overwrite=True)
-    fits.writeto(results_dir+'/sigm.fits',sigm,overwrite=True)
-    fits.writeto(results_dir+'/velm_b.fits',velm_b,overwrite=True)
-    fits.writeto(results_dir+'/sigm_b.fits',sigm_b,overwrite=True)
+    fits.writeto(results_dir+'/fluxm2.fits',fluxm2,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/fluxm3.fits',fluxm3,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/fluxm2_b.fits',fluxm2_b,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/fluxm3_b.fits',fluxm3_b,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/velm.fits',velm,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/sigm.fits',sigm,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/velm_b.fits',velm_b,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/sigm_b.fits',sigm_b,header=hdr,overwrite=True)
 
-    fits.writeto(results_dir+'/flux2_err.fits',fluxm2_err,overwrite=True)
-    fits.writeto(results_dir+'/flux3_err.fits',fluxm3_err,overwrite=True)
-    fits.writeto(results_dir+'/flux2_b_err.fits',fluxm2_b_err,overwrite=True)
-    fits.writeto(results_dir+'/flux3_b_err.fits',fluxm3_b_err,overwrite=True)
-    fits.writeto(results_dir+'/vel_err.fits',velm_err,overwrite=True)
-    fits.writeto(results_dir+'/sig_err.fits',sigm_err,overwrite=True)
-    fits.writeto(results_dir+'/vel_b_err.fits',velm_b_err,overwrite=True)
-    fits.writeto(results_dir+'/sig_b_err.fits',sigm_b_err,overwrite=True)
+    fits.writeto(results_dir+'/flux2_err.fits',fluxm2_err,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/flux3_err.fits',fluxm3_err,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/flux2_b_err.fits',fluxm2_b_err,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/flux3_b_err.fits',fluxm3_b_err,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/vel_err.fits',velm_err,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/sig_err.fits',sigm_err,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/vel_b_err.fits',velm_b_err,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/sig_b_err.fits',sigm_b_err,header=hdr,overwrite=True)
     
-    fits.writeto(results_dir+'/residuals.fits',residualsm,overwrite=True)
-    fits.writeto(results_dir+'/redchi.fits',redchi,overwrite=True)
-    fits.writeto(results_dir+'/redchi_w.fits',redchi_w,overwrite=True)
-    fits.writeto(results_dir+'/bic.fits',bic,overwrite=True)
+    fits.writeto(results_dir+'/residuals.fits',residualsm,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/redchi.fits',redchi,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/redchi_w.fits',redchi_w,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/bic.fits',bic,header=hdr,overwrite=True)
     
-    fits.writeto(results_dir+'/ncomps_flag.fits',ncomps_flag,overwrite=True)
-    fits.writeto(results_dir+'/bic_flag.fits',bic_flag,overwrite=True)
+    fits.writeto(results_dir+'/ncomps_flag.fits',ncomps_flag,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/bic_flag.fits',bic_flag,header=hdr,overwrite=True)
 
     xm = np.ravel(xm)
     ym = np.ravel(ym)
@@ -1802,7 +1802,7 @@ def three_gaussians_2g_cons(naxis1,naxis2,result_list,results_dir,lam_r,ncomps_f
 
     return
 
-def hb_ha_n2_gaussians_cons(naxis1,naxis2,result_list,results_dir,lam_r):
+def hb_ha_n2_gaussians_cons(naxis1,naxis2,result_list,results_dir,lam_r,hdr):
 
     results = np.reshape(result_list, (naxis2,naxis1))
 
@@ -1872,22 +1872,22 @@ def hb_ha_n2_gaussians_cons(naxis1,naxis2,result_list,results_dir,lam_r):
             xm[j,i] = i
             ym[j,i] = j
 
-    fits.writeto(results_dir+'/fluxm1.fits',fluxm1,overwrite=True)
-    fits.writeto(results_dir+'/fluxm2.fits',fluxm2,overwrite=True)
-    fits.writeto(results_dir+'/fluxm3.fits',fluxm3,overwrite=True)
-    fits.writeto(results_dir+'/velm.fits',velm,overwrite=True)
-    fits.writeto(results_dir+'/sigm.fits',sigm,overwrite=True)
+    fits.writeto(results_dir+'/fluxm1.fits',fluxm1,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/fluxm2.fits',fluxm2,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/fluxm3.fits',fluxm3,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/velm.fits',velm,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/sigm.fits',sigm,header=hdr,overwrite=True)
 
-    fits.writeto(results_dir+'/flux1_err.fits',fluxm1_err,overwrite=True)
-    fits.writeto(results_dir+'/flux2_err.fits',fluxm2_err,overwrite=True)
-    fits.writeto(results_dir+'/flux3_err.fits',fluxm3_err,overwrite=True)
-    fits.writeto(results_dir+'/vel_err.fits',velm_err,overwrite=True)
-    fits.writeto(results_dir+'/sig_err.fits',sigm_err,overwrite=True)
+    fits.writeto(results_dir+'/flux1_err.fits',fluxm1_err,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/flux2_err.fits',fluxm2_err,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/flux3_err.fits',fluxm3_err,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/vel_err.fits',velm_err,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/sig_err.fits',sigm_err,header=hdr,overwrite=True)
     
-    fits.writeto(results_dir+'/residuals.fits',residualsm,overwrite=True)
-    fits.writeto(results_dir+'/redchi.fits',redchi,overwrite=True)
-    fits.writeto(results_dir+'/redchi_w.fits',redchi_w,overwrite=True)
-    fits.writeto(results_dir+'/bic.fits',bic,overwrite=True)
+    fits.writeto(results_dir+'/residuals.fits',residualsm,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/redchi.fits',redchi,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/redchi_w.fits',redchi_w,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/bic.fits',bic,header=hdr,overwrite=True)
 
     xm = np.ravel(xm)
     ym = np.ravel(ym)
@@ -2108,35 +2108,35 @@ def hb_ha_n2_gaussians_2g_cons(naxis1,naxis2,result_list,results_dir,lam_r,ncomp
             xm[j,i] = i
             ym[j,i] = j
 
-    fits.writeto(results_dir+'/fluxm1.fits',fluxm1,overwrite=True)
-    fits.writeto(results_dir+'/fluxm2.fits',fluxm2,overwrite=True)
-    fits.writeto(results_dir+'/fluxm3.fits',fluxm3,overwrite=True)
-    fits.writeto(results_dir+'/fluxm1_b.fits',fluxm1_b,overwrite=True)
-    fits.writeto(results_dir+'/fluxm2_b.fits',fluxm2_b,overwrite=True)
-    fits.writeto(results_dir+'/fluxm3_b.fits',fluxm3_b,overwrite=True)
-    fits.writeto(results_dir+'/velm.fits',velm,overwrite=True)
-    fits.writeto(results_dir+'/sigm.fits',sigm,overwrite=True)
-    fits.writeto(results_dir+'/velm_b.fits',velm_b,overwrite=True)
-    fits.writeto(results_dir+'/sigm_b.fits',sigm_b,overwrite=True)
+    fits.writeto(results_dir+'/fluxm1.fits',fluxm1,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/fluxm2.fits',fluxm2,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/fluxm3.fits',fluxm3,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/fluxm1_b.fits',fluxm1_b,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/fluxm2_b.fits',fluxm2_b,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/fluxm3_b.fits',fluxm3_b,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/velm.fits',velm,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/sigm.fits',sigm,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/velm_b.fits',velm_b,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/sigm_b.fits',sigm_b,header=hdr,overwrite=True)
 
-    fits.writeto(results_dir+'/flux1_err.fits',fluxm1_err,overwrite=True)
-    fits.writeto(results_dir+'/flux2_err.fits',fluxm2_err,overwrite=True)
-    fits.writeto(results_dir+'/flux3_err.fits',fluxm3_err,overwrite=True)
-    fits.writeto(results_dir+'/flux1_b_err.fits',fluxm1_b_err,overwrite=True)
-    fits.writeto(results_dir+'/flux2_b_err.fits',fluxm2_b_err,overwrite=True)
-    fits.writeto(results_dir+'/flux3_b_err.fits',fluxm3_b_err,overwrite=True)
-    fits.writeto(results_dir+'/vel_err.fits',velm_err,overwrite=True)
-    fits.writeto(results_dir+'/sig_err.fits',sigm_err,overwrite=True)
-    fits.writeto(results_dir+'/vel_b_err.fits',velm_b_err,overwrite=True)
-    fits.writeto(results_dir+'/sig_b_err.fits',sigm_b_err,overwrite=True)
+    fits.writeto(results_dir+'/flux1_err.fits',fluxm1_err,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/flux2_err.fits',fluxm2_err,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/flux3_err.fits',fluxm3_err,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/flux1_b_err.fits',fluxm1_b_err,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/flux2_b_err.fits',fluxm2_b_err,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/flux3_b_err.fits',fluxm3_b_err,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/vel_err.fits',velm_err,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/sig_err.fits',sigm_err,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/vel_b_err.fits',velm_b_err,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/sig_b_err.fits',sigm_b_err,header=hdr,overwrite=True)
     
-    fits.writeto(results_dir+'/residuals.fits',residualsm,overwrite=True)
-    fits.writeto(results_dir+'/redchi.fits',redchi,overwrite=True)
-    fits.writeto(results_dir+'/redchi_w.fits',redchi_w,overwrite=True)
-    fits.writeto(results_dir+'/bic.fits',bic,overwrite=True)
+    fits.writeto(results_dir+'/residuals.fits',residualsm,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/redchi.fits',redchi,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/redchi_w.fits',redchi_w,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/bic.fits',bic,header=hdr,overwrite=True)
     
-    fits.writeto(results_dir+'/ncomps_flag.fits',ncomps_flag,overwrite=True)
-    fits.writeto(results_dir+'/bic_flag.fits',bic_flag,overwrite=True)
+    fits.writeto(results_dir+'/ncomps_flag.fits',ncomps_flag,header=hdr,overwrite=True)
+    fits.writeto(results_dir+'/bic_flag.fits',bic_flag,header=hdr,overwrite=True)
 
     xm = np.ravel(xm)
     ym = np.ravel(ym)

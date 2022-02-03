@@ -30,25 +30,10 @@ def forloop(args):
     
     xf, yf,params= args
     
-    #start_l = time.time()
-    
     if ((xf/10.).is_integer()) & ((yf/10.).is_integer()) & (xf == yf):
         print('x = '+str(xf), '| y = '+str(yf))
     
     result = gmodel.fit(f_res[:,yf,xf], params, x=lam_r)
-
-    #end_l = time.time()
-    
-    #runtime = end_l-start_l
-    #hrs = runtime/60./60.
-    #mins = (hrs-int(hrs))*60.
-    #secs = round((mins-int(mins))*60.,3)
-    
-    #pid = os.getpid() 
-    
-    #print('')
-    #print('pid = '+str(pid)+' | x = '+str(xf), '| y = '+str(yf)+' | '+str(secs)+'s.')
-    #print('')
 
     return (result)
 
@@ -107,7 +92,6 @@ for g in ids:
 
     if lines_to_fit == 'all':
         for lines_to_fit in ['ha_n2','hb','o3','s2','o1']:
-        #for lines_to_fit in np.array(['o3','s2','o1']):
         
             run_time = datetime.now().strftime('%Y-%m-%d_%H.%M.%S')
 
@@ -290,19 +274,19 @@ for g in ids:
                     print('')
                 
                     if lines_to_fit == 'o3_cons':
-                        output.two_gaussians_2g_cons_o3(naxis1,naxis2,result_list,results_dir,lam_r,ncomps_flag,bic_flag)
+                        output.two_gaussians_2g_cons_o3(naxis1,naxis2,result_list,results_dir,lam_r,ncomps_flag,bic_flag,cube[0].header)
 
                     elif lines_to_fit == 'o1_cons':
-                        output.two_gaussians_2g_cons_o1(naxis1,naxis2,result_list,results_dir,lam_r,ncomps_flag,bic_flag)
+                        output.two_gaussians_2g_cons_o1(naxis1,naxis2,result_list,results_dir,lam_r,ncomps_flag,bic_flag,cube[0].header)
 
                     elif lines_to_fit == 's2_cons':
-                        output.two_gaussians_2g_cons_s2(naxis1,naxis2,result_list,results_dir,lam_r,ncomps_flag,bic_flag)
+                        output.two_gaussians_2g_cons_s2(naxis1,naxis2,result_list,results_dir,lam_r,ncomps_flag,bic_flag,cube[0].header)
                 
                     elif lines_to_fit == 'ha_n2_cons':
-                        output.three_gaussians_2g_cons(naxis1,naxis2,result_list,results_dir,lam_r,ncomps_flag,bic_flag)
+                        output.three_gaussians_2g_cons(naxis1,naxis2,result_list,results_dir,lam_r,ncomps_flag,bic_flag,cube[0].header)
                         
                     elif lines_to_fit == 'hb_ha_n2_cons':
-                        output.hb_ha_n2_gaussians_2g_cons(naxis1,naxis2,result_list,results_dir,lam_r,ncomps_flag,bic_flag)
+                        output.hb_ha_n2_gaussians_2g_cons(naxis1,naxis2,result_list,results_dir,lam_r,ncomps_flag,bic_flag,cube[0].header)
                 
                 else:
 
@@ -311,13 +295,13 @@ for g in ids:
                     print('')
 
                     if lines_to_fit == 'hb_ha_n2_cons':
-                        output.hb_ha_n2_gaussians_cons(naxis1,naxis2,result_list,results_dir,lam_r)
+                        output.hb_ha_n2_gaussians_cons(naxis1,naxis2,result_list,results_dir,lam_r,cube[0].header)
                         
                     elif (lines_to_fit == 'o3_cons') | (lines_to_fit == 'o1_cons'):
-                        output.two_gaussians_cons(naxis1,naxis2,result_list,results_dir,lam_r)
+                        output.two_gaussians_cons(naxis1,naxis2,result_list,results_dir,lam_r,cube[0].header)
 
                     elif lines_to_fit == 's2_cons':
-                        output.two_gaussians_cons_s2(naxis1,naxis2,result_list,results_dir,lam_r)
+                        output.two_gaussians_cons_s2(naxis1,naxis2,result_list,results_dir,lam_r,cube[0].header)
 
                 fits.writeto(results_dir+'/SN.fits',SN,overwrite=True)
                 
@@ -484,19 +468,19 @@ for g in ids:
                 print('')
             
                 if lines_to_fit == 'o3_cons':
-                    output.two_gaussians_2g_cons_o3(naxis1,naxis2,result_list,results_dir,lam_r,ncomps_flag,bic_flag)
+                    output.two_gaussians_2g_cons_o3(naxis1,naxis2,result_list,results_dir,lam_r,ncomps_flag,bic_flag,cube[0].header)
 
                 elif lines_to_fit == 'o1_cons':
-                    output.two_gaussians_2g_cons_o1(naxis1,naxis2,result_list,results_dir,lam_r,ncomps_flag,bic_flag)
+                    output.two_gaussians_2g_cons_o1(naxis1,naxis2,result_list,results_dir,lam_r,ncomps_flag,bic_flag,cube[0].header)
 
                 elif lines_to_fit == 's2_cons':
-                    output.two_gaussians_2g_cons_s2(naxis1,naxis2,result_list,results_dir,lam_r,ncomps_flag,bic_flag)
+                    output.two_gaussians_2g_cons_s2(naxis1,naxis2,result_list,results_dir,lam_r,ncomps_flag,bic_flag,cube[0].header)
             
                 elif lines_to_fit == 'ha_n2_cons':
-                    output.three_gaussians_2g_cons(naxis1,naxis2,result_list,results_dir,lam_r,ncomps_flag,bic_flag)
+                    output.three_gaussians_2g_cons(naxis1,naxis2,result_list,results_dir,lam_r,ncomps_flag,bic_flag,cube[0].header)
                     
                 elif lines_to_fit == 'hb_ha_n2_cons':
-                    output.hb_ha_n2_gaussians_2g_cons(naxis1,naxis2,result_list,results_dir,lam_r,ncomps_flag,bic_flag)
+                    output.hb_ha_n2_gaussians_2g_cons(naxis1,naxis2,result_list,results_dir,lam_r,ncomps_flag,bic_flag,cube[0].header)
             
             else:
                 
@@ -505,28 +489,28 @@ for g in ids:
                 print('')
             
                 if lines_to_fit == 'ha_n2':
-                    output.three_gaussians(naxis1,naxis2,result_list,results_dir,lam_r)
+                    output.three_gaussians(naxis1,naxis2,result_list,results_dir,lam_r,cube[0].header)
                     
                 elif lines_to_fit == 'ha_n2_cons':
-                    output.three_gaussians_cons(naxis1,naxis2,result_list,results_dir,lam_r)
+                    output.three_gaussians_cons(naxis1,naxis2,result_list,results_dir,lam_r,cube[0].header)
                     
                 elif lines_to_fit == 'ha_n2_2g_cons':
-                    output.three_gaussians_2g_cons(naxis1,naxis2,result_list,results_dir,lam_r)
+                    output.three_gaussians_2g_cons(naxis1,naxis2,result_list,results_dir,lam_r,cube[0].header)
                     
                 elif lines_to_fit == 'hb_ha_n2_cons':
-                    output.hb_ha_n2_gaussians_cons(naxis1,naxis2,result_list,results_dir,lam_r)
+                    output.hb_ha_n2_gaussians_cons(naxis1,naxis2,result_list,results_dir,lam_r,cube[0].header)
 
                 elif lines_to_fit == 'hb':
-                    output.one_gaussian(naxis1,naxis2,result_list,results_dir,lam_r)
+                    output.one_gaussian(naxis1,naxis2,result_list,results_dir,lam_r,cube[0].header)
                     
                 elif (lines_to_fit == 'o3') | (lines_to_fit == 's2') | (lines_to_fit == 'o1'):
-                    output.two_gaussians(naxis1,naxis2,result_list,results_dir,lam_r)
+                    output.two_gaussians(naxis1,naxis2,result_list,results_dir,lam_r,cube[0].header)
                     
                 elif (lines_to_fit == 'o3_cons') | (lines_to_fit == 'o1_cons'):
-                    output.two_gaussians_cons(naxis1,naxis2,result_list,results_dir,lam_r)
+                    output.two_gaussians_cons(naxis1,naxis2,result_list,results_dir,lam_r,cube[0].header)
 
                 elif lines_to_fit == 's2_cons':
-                    output.two_gaussians_cons_s2(naxis1,naxis2,result_list,results_dir,lam_r)
+                    output.two_gaussians_cons_s2(naxis1,naxis2,result_list,results_dir,lam_r,cube[0].header)
 
             fits.writeto(results_dir+'/SN.fits',SN,overwrite=True)
             

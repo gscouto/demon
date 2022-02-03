@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from demon_config import *
+from demon_config_alma import *
 
 def hb(gmodel,lam,cube,SN,c,results_dir,aut_ini):
     
@@ -715,12 +715,12 @@ def co32(gmodel,freq,cube,SN,c,results_dir,aut_ini):
     params['flux'].min = init_params['flux_min']
     params['vel'].value = init_params['vel']
     params['sig'].value = init_params['sig']
-    params['freq0'].value = 345.796e9
+    params['freq0'].value = 292.6#345.796e9
     params['freq0'].vary = False
     
     params['sig'].min = init_params['sig_min']
     
-    params['sig'].max = init_params['sig_max']
+    #params['sig'].max = init_params['sig_max']
     
     if (aut_ini == 'yes'):
         lam_i = (np.abs(lam - (params['vel']*params['freq0']+(params['freq0']*c)-1000.))).argmin()
@@ -742,13 +742,12 @@ def co32(gmodel,freq,cube,SN,c,results_dir,aut_ini):
         
         params['flux'].value = init_params['flux']
     
-    params['vel'].min = params['vel'].value+init_params['vel_min']
+    #params['vel'].min = params['vel'].value+init_params['vel_min']
     
-    params['vel'].max = params['vel'].value+init_params['vel_max']
+    #params['vel'].max = params['vel'].value+init_params['vel_max']
     
-    freq_i = (np.abs(freq - (params['freq0']/((params['vel']/c)+1)-1000.))).argmin()
-    freq_f = (np.abs(freq - (params['freq0']/((params['vel']/c)+1)+1000.))).argmin()
-    f_res = cube[0].data[0,freq_i:freq_f,:,:]
-    freq_r = freq[freq_i:freq_f]
+    f_res = cube[0].data[0,:,:,:]*1000.
+    f_res[~np.isfinite(f_res)] = 0.
+    freq_r = freq.copy()
     
     return params,f_res,freq_r,SN

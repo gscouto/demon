@@ -1,6 +1,6 @@
 import numpy as np
 from astropy.constants import c
-from demon_config import *
+from demon_config_alma import *
 
 c = c.value/1000.
 
@@ -12,7 +12,9 @@ def one_gaussian(x, a, b, flux, vel, sig, lam0):
 def one_gaussian_co32(x, a, b, flux, vel, sig, freq0):
     
     return (a + (b*x)) + \
-        (flux / (np.sqrt(2*np.pi) * (np.sqrt((sig**2)+(inst_sigma_blue**2))*freq0))) * np.exp(-(x-((vel*freq0)+(freq0*c)))**2 / (2*(np.sqrt((sig**2)+(inst_sigma_blue**2))*freq0)**2))
+        (flux / (np.sqrt(2*np.pi) * (sig*freq0/c))) * np.exp(-(x-(freq0/((vel/c)+1)))**2 / (2*(sig*freq0/c))**2)
+    
+# https://science.nrao.edu/facilities/vla/docs/manuals/obsguide/modes/line        
     
 def two_gaussians(x, a, b, flux1, flux2, vel1, vel2, sig1, sig2, lam01, lam02):
     
