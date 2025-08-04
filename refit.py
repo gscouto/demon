@@ -1,6 +1,7 @@
 import numpy as np
 import sys
 from demon_config import *
+from astropy.io import fits
 
 def one_gaussian(naxis1,naxis2,result_list,results_dir,lam_r,params,gmodel):
 
@@ -30,6 +31,8 @@ def one_gaussian(naxis1,naxis2,result_list,results_dir,lam_r,params,gmodel):
     rc_limit = redchi_limit
 
     redchi_mask[redchi>rc_limit] = 1
+    redchi_mask[sig == init_params['sig_min']] = 1
+    redchi_mask[sig == init_params['sig_max']] = 1
     
     y_mask, x_mask = np.where(redchi_mask == 1)
 
@@ -331,6 +334,8 @@ def two_gaussians_cons_s2(naxis1,naxis2,result_list,results_dir,lam_r,params,gmo
     rc_limit = redchi_limit
 
     redchi_mask[redchi>rc_limit] = 1
+    redchi_mask[np.around(sig) == init_params['sig_min']] = 1
+    redchi_mask[np.around(sig) == init_params['sig_max']] = 1
     
     y_mask, x_mask = np.where(redchi_mask == 1)
 
@@ -349,13 +354,26 @@ def two_gaussians_cons_s2(naxis1,naxis2,result_list,results_dir,lam_r,params,gmo
         print("Progress {:2.1%}".format(float(k)/float(len(y_mask))), end="\r")
 
         refit_pixs.write('x = '+str(x_mask[k])+' y = '+str(y_mask[k])+'\n')
+
+        xmin = x_mask[k]-radius
+        if xmin < 0:
+            xmin = 0
+        xmax = x_mask[k]+radius
+        if xmax > redchi_mask.shape[1]-1:
+            xmax = redchi_mask.shape[1]-1
+        ymin = y_mask[k]-radius
+        if ymin < 0:
+            ymin = 0
+        ymax = y_mask[k]+radius
+        if ymax > redchi_mask.shape[0]-1:
+            ymax = redchi_mask.shape[0]-1
     
-        p_a = np.nanmedian(a[y_mask[k]-radius:y_mask[k]+radius,x_mask[k]-radius:x_mask[k]+radius])
-        p_b = np.nanmedian(b[y_mask[k]-radius:y_mask[k]+radius,x_mask[k]-radius:x_mask[k]+radius])
-        p_flux = np.nanmedian(flux[y_mask[k]-radius:y_mask[k]+radius,x_mask[k]-radius:x_mask[k]+radius])
-        p_ratio = np.nanmedian(ratio[y_mask[k]-radius:y_mask[k]+radius,x_mask[k]-radius:x_mask[k]+radius])
-        p_vel = np.nanmedian(vel[y_mask[k]-radius:y_mask[k]+radius,x_mask[k]-radius:x_mask[k]+radius])
-        p_sig = np.nanmedian(sig[y_mask[k]-radius:y_mask[k]+radius,x_mask[k]-radius:x_mask[k]+radius])
+        p_a = np.nanmedian(a[ymin:ymax,xmin:xmax])
+        p_b = np.nanmedian(b[ymin:ymax,xmin:xmax])
+        p_flux = np.nanmedian(flux[ymin:ymax,xmin:xmax])
+        p_ratio = np.nanmedian(ratio[ymin:ymax,xmin:xmax])
+        p_vel = np.nanmedian(vel[ymin:ymax,xmin:xmax])
+        p_sig = np.nanmedian(sig[ymin:ymax,xmin:xmax])
         
         if ~np.isfinite(p_a):
             p_a = results[y_mask[k],x_mask[k]].params['a'].value
@@ -385,9 +403,14 @@ def two_gaussians_cons_s2(naxis1,naxis2,result_list,results_dir,lam_r,params,gmo
         nparams['vel'].min = p_vel+refit_vel_min
         nparams['vel'].max = p_vel+refit_vel_max
         
-        nparams['sig'].min = init_params['sig_min']
-        nparams['sig'].max = init_params['sig_max']
-        
+        # nparams['sig'].min = init_params['sig_min']
+        # nparams['sig'].max = init_params['sig_max']
+
+        nparams['sig'].min = p_sig+refit_sig_min
+        nparams['sig'].max = p_sig+refit_sig_max
+        if nparams['sig'].max >= init_params['sig_max']:
+            nparams['sig'].max = init_params['sig_max']
+
         nparams['lam01'].value = 6716.44
         nparams['lam01'].vary = False
         nparams['lam02'].value = 6730.81
@@ -395,7 +418,9 @@ def two_gaussians_cons_s2(naxis1,naxis2,result_list,results_dir,lam_r,params,gmo
 
         results[y_mask[k],x_mask[k]] = gmodel.fit(results[y_mask[k],x_mask[k]].data, nparams, x=lam_r)
         
-    refit_pixs.close()
+    fits.writeto(results_dir+'/refit_mask.fits',redchi_mask,overwrite=True)
+
+    refit_pixs = open(results_dir+'/refit_pix.txt','w')
    
     result_list = np.ravel(results)
     
@@ -625,7 +650,7 @@ def three_gaussians_cons(naxis1,naxis2,result_list,results_dir,lam_r,params,gmod
         
         nparams['a'].value = p_a 
         nparams['b'].value = p_b
-        nparams['flux'].value = init_params['flux']
+        nparams['flux'].value = p_flux
         nparams['flux'].min = init_params['flux_min']
         nparams['ratio'].value = p_ratio
         nparams['ratio'].min = init_params['n2_ha_ratio_min']
