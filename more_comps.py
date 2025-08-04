@@ -39,7 +39,7 @@ def two_gaussians_cons_o3(naxis1,naxis2,result_list,results_dir,lam_r,params):
                     plt.plot(results[j,i].data,color='black')
                     plt.plot(results[j,i].residual,color='blue')
                     plt.plot(results[j,i].best_fit,color='red')
-                    plt.savefig(results_dir+'/more_comps_plots/fit_'+str(i)+'_'+str(j)+'.pdf',overwrite=True)   
+                    plt.savefig(results_dir+'/more_comps_plots/fit_'+str(i)+'_'+str(j)+'.pdf')
                     
                     plt.close()
     
@@ -54,7 +54,7 @@ def two_gaussians_cons_o3(naxis1,naxis2,result_list,results_dir,lam_r,params):
     nparams['flux_b'].value = init_params['flux']
     nparams['flux_b'].min = init_params['flux_min']
     nparams.add('flux_delta',value=init_params['flux_delta'],min=init_params['flux_delta_min'],max=init_params['flux_delta_max'],vary=True)
-    nparams['flux_b'].set(expr='flux/flux_delta')
+    nparams['flux_b'].set(expr='flux_delta*flux')
     
     nparams['vel'].value = init_params['vel']
     nparams['sig'].value = init_params['sig']
@@ -131,7 +131,7 @@ def two_gaussians_cons_o1(naxis1,naxis2,result_list,results_dir,lam_r,params):
                     plt.plot(results[j,i].data,color='black')
                     plt.plot(results[j,i].residual,color='blue')
                     plt.plot(results[j,i].best_fit,color='red')
-                    plt.savefig(results_dir+'/more_comps_plots/fit_'+str(i)+'_'+str(j)+'.pdf',overwrite=True)   
+                    plt.savefig(results_dir+'/more_comps_plots/fit_'+str(i)+'_'+str(j)+'.pdf')
                     
                     plt.close()
     
@@ -146,7 +146,7 @@ def two_gaussians_cons_o1(naxis1,naxis2,result_list,results_dir,lam_r,params):
     nparams['flux_b'].value = init_params['flux']
     nparams['flux_b'].min = init_params['flux_min']
     nparams.add('flux_delta',value=init_params['flux_delta'],min=init_params['flux_delta_min'],max=init_params['flux_delta_max'],vary=True)
-    nparams['flux_b'].set(expr='flux/flux_delta')
+    nparams['flux_b'].set(expr='flux_delta*flux')
     
     nparams['vel'].value = init_params['vel']
     nparams['sig'].value = init_params['sig']
@@ -223,7 +223,7 @@ def two_gaussians_cons_s2(naxis1,naxis2,result_list,results_dir,lam_r,params):
                     plt.plot(results[j,i].data,color='black')
                     plt.plot(results[j,i].residual,color='blue')
                     plt.plot(results[j,i].best_fit,color='red')
-                    plt.savefig(results_dir+'/more_comps_plots/fit_'+str(i)+'_'+str(j)+'.pdf',overwrite=True)   
+                    plt.savefig(results_dir+'/more_comps_plots/fit_'+str(i)+'_'+str(j)+'.pdf')
                     
                     plt.close()
     
@@ -238,7 +238,7 @@ def two_gaussians_cons_s2(naxis1,naxis2,result_list,results_dir,lam_r,params):
     nparams['flux_b'].value = init_params['flux']
     nparams['flux_b'].min = init_params['flux_min']
     nparams.add('flux_delta',value=init_params['flux_delta'],min=init_params['flux_delta_min'],max=init_params['flux_delta_max'],vary=True)
-    nparams['flux_b'].set(expr='flux/flux_delta')
+    nparams['flux_b'].set(expr='flux_delta*flux')
     
     nparams['ratio'].value = init_params['s2_ratio']
     nparams['ratio'].min = init_params['s2_ratio_min']
@@ -298,7 +298,7 @@ def three_gaussians_cons(naxis1,naxis2,result_list,results_dir,lam_r,params):
 
     for i in np.arange(naxis1):
         for j in np.arange(naxis2):
-        
+
             res_max_lim = 5*np.std(np.array(results[j,i].data)[np.r_[0:20,len(lam_r)-20:len(lam_r)]])
             res_min_lim = -5*np.std(np.array(results[j,i].data)[np.r_[0:20,len(lam_r)-20:len(lam_r)]])
             
@@ -309,24 +309,25 @@ def three_gaussians_cons(naxis1,naxis2,result_list,results_dir,lam_r,params):
             r_max = ((results[j,i].residual > res_max_lim)*gaussian_region)[line_peak-20:line_peak+20]
             r_min = ((results[j,i].residual < res_min_lim)*gaussian_region)[line_peak-20:line_peak+20]
 
-            if (any(r_max[k]==r_max[k+1]==True for k in range(len(r_max)-1)) | any(r_min[k]==r_min[k+1]==True for k in range(len(r_min)-1))) and (results[j,i].params['flux'].stderr):
-                if (results[j,i].params['flux'].stderr/results[j,i].params['flux'].value < 0.5) & (results[j,i].params['sig'].stderr < 20) & (results[j,i].params['vel'].stderr < 20):
+            # if (any(r_max[k]==r_max[k+1]==True for k in range(len(r_max)-1)) | any(r_min[k]==r_min[k+1]==True for k in range(len(r_min)-1))) and (results[j,i].params['flux'].stderr):
+            if (results[j,i].params['flux'].stderr):
+                if (results[j,i].params['sig'].stderr < 35) & (results[j,i].params['vel'].stderr < 35) & (results[j,i].params['sig'].value > 120):
                     ncomps_flag[j,i] = 1
                     bic_flag[j,i] = 1
                     
-                    os.makedirs(results_dir+'/more_comps_plots', exist_ok=True)
-                    
-                    fig = plt.figure(figsize=(7,3))
-                    
-                    plt.plot((results[j,i].data*0.)+res_max_lim,color='gray')
-                    plt.plot((results[j,i].data*0.)+res_min_lim,color='gray')
-                    plt.plot(results[j,i].data,color='black')
-                    plt.plot(results[j,i].residual,color='blue')
-                    plt.plot(results[j,i].best_fit,color='red')
-                    plt.savefig(results_dir+'/more_comps_plots/fit_'+str(i)+'_'+str(j)+'.pdf',overwrite=True)   
-                    
-                    plt.close()
-    
+#                     os.makedirs(results_dir+'/more_comps_plots', exist_ok=True)
+#
+#                     fig = plt.figure(figsize=(7,3))
+#
+#                     plt.plot((results[j,i].data*0.)+res_max_lim,color='gray')
+#                     plt.plot((results[j,i].data*0.)+res_min_lim,color='gray')
+#                     plt.plot(results[j,i].data,color='black')
+#                     plt.plot(results[j,i].residual,color='blue')
+#                     plt.plot(results[j,i].best_fit,color='red')
+#                     plt.savefig(results_dir+'/more_comps_plots/fit_'+str(i)+'_'+str(j)+'.pdf')
+#
+#                     plt.close()
+
     gmodel = Model(fit_functions.three_gaussians_2g_cons)
     
     nparams = gmodel.make_params()
@@ -338,14 +339,14 @@ def three_gaussians_cons(naxis1,naxis2,result_list,results_dir,lam_r,params):
     nparams['flux_b'].value = init_params['flux']
     nparams['flux_b'].min = init_params['flux_min']
     nparams.add('flux_delta',value=init_params['flux_delta'],min=init_params['flux_delta_min'],max=init_params['flux_delta_max'],vary=True)
-    nparams['flux_b'].set(expr='flux/flux_delta')
-    
+    nparams['flux_b'].set(expr='flux_delta*flux')
     nparams['ratio'].value = init_params['n2_ha_ratio']
     nparams['ratio'].min = init_params['n2_ha_ratio_min']
     nparams['ratio'].max = init_params['n2_ha_ratio_max']
-    nparams['ratio_b'].value = init_params['n2_ha_ratio']
-    nparams['ratio_b'].min = init_params['n2_ha_ratio_min']
-    nparams['ratio_b'].max = init_params['n2_ha_ratio_max']
+    # nparams['ratio_b'].value = init_params['n2_ha_ratio']
+    # nparams['ratio_b'].min = init_params['n2_ha_ratio_min']
+    # nparams['ratio_b'].max = init_params['n2_ha_ratio_max']
+    nparams['ratio_b'].set(expr='ratio')
     nparams['vel'].value = init_params['vel']
     nparams['sig'].value = init_params['sig']
     nparams['lam01'].value = 6548.04
@@ -360,27 +361,29 @@ def three_gaussians_cons(naxis1,naxis2,result_list,results_dir,lam_r,params):
     nparams.add('sig_delta',value=init_params['sig_delta'],min=init_params['sig_delta_min'],max=init_params['sig_delta_max'],vary=True)
     nparams['sig_b'].set(expr='sig_delta*sig')
     
-    nparams['vel'].min = init_params['vel_min']
-    nparams['vel'].max = init_params['vel_max']
+    # nparams['vel'].min = init_params['vel_min']
+    # nparams['vel'].max = init_params['vel_max']
     nparams.add('vel_delta',value=init_params['vel_delta'],min=init_params['vel_delta_min'],max=init_params['vel_delta_max'],vary=True)
     nparams['vel_b'].set(expr='vel+vel_delta')
-    
+
     y_mask, x_mask = np.where(ncomps_flag == 1)
         
     global kloop
         
     def kloop(args):
         
-        results_data, lam_r, nparams, k, l = args
+        results_data, lam_r, nparams, yf, xf = args
 
-        print("Progress {:2.1%}".format(float(k)/float(l)), end="\r")
+        # print("Progress {:2.1%}".format(float(k)/float(l)), end="\r")
+        if ((xf/10.).is_integer()) & ((yf/10.).is_integer()) & (xf == yf):
+            print('x = '+str(xf), '| y = '+str(yf))
         
         result = gmodel.fit(results_data, nparams, x=lam_r)
         
         return (result)
         
     with mp.Pool(n_proc) as pool:
-        results_k = pool.starmap(kloop, zip((results[y_mask[k],x_mask[k]].data, lam_r, nparams, k, len(y_mask)) for k in np.arange(len(y_mask))))        
+        results_k = pool.starmap(kloop, zip((results[y_mask[k],x_mask[k]].data, lam_r, nparams, y_mask[k], x_mask[k]) for k in np.arange(len(y_mask))))
 
     for k in np.arange(len(y_mask)):
         if (results_k[k].bic < results[y_mask[k],x_mask[k]].bic):
@@ -451,7 +454,7 @@ def hb_ha_n2_gaussians_cons(naxis1,naxis2,result_list,results_dir,lam_r,params):
                     plt.plot(results[j,i].residual,color='blue')
                     plt.plot(results[j,i].best_fit,color='red')
                     plt.xlim([int(len(lam_r)/2),len(lam_r)])
-                    plt.savefig(results_dir+'/more_comps_plots/fit_'+str(i)+'_'+str(j)+'.pdf',overwrite=True)   
+                    plt.savefig(results_dir+'/more_comps_plots/fit_'+str(i)+'_'+str(j)+'.pdf')
                     
                     plt.close()
     
@@ -468,7 +471,7 @@ def hb_ha_n2_gaussians_cons(naxis1,naxis2,result_list,results_dir,lam_r,params):
     nparams['flux_b'].value = init_params['flux']
     nparams['flux_b'].min = init_params['flux_min']
     nparams.add('flux_delta',value=init_params['flux_delta'],min=init_params['flux_delta_min'],max=init_params['flux_delta_max'],vary=True)
-    nparams['flux_b'].set(expr='flux/flux_delta')
+    nparams['flux_b'].set(expr='flux_delta*flux')
     
     nparams['ratio_n2'].value = init_params['n2_ha_ratio']
     nparams['ratio_n2'].min = init_params['n2_ha_ratio_min']
