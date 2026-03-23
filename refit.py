@@ -736,16 +736,36 @@ def three_gaussians_2g_cons(naxis1,naxis2,result_list,results_dir,lam_r,params,g
         print("Progress {:2.1%}".format(float(k)/float(len(y_mask))), end="\r")
 
         refit_pixs.write('x = '+str(x_mask[k])+' y = '+str(y_mask[k])+'\n')
-    
-        p_a = np.nanmedian(a[y_mask[k]-radius:y_mask[k]+radius,x_mask[k]-radius:x_mask[k]+radius])
-        p_b = np.nanmedian(b[y_mask[k]-radius:y_mask[k]+radius,x_mask[k]-radius:x_mask[k]+radius])
-        p_flux = np.nanmedian(flux[y_mask[k]-radius:y_mask[k]+radius,x_mask[k]-radius:x_mask[k]+radius])
-        p_flux_b = np.nanmedian(flux_b[y_mask[k]-radius:y_mask[k]+radius,x_mask[k]-radius:x_mask[k]+radius])
-        p_ratio = np.nanmedian(ratio[y_mask[k]-radius:y_mask[k]+radius,x_mask[k]-radius:x_mask[k]+radius])
-        p_vel = np.nanmedian(vel[y_mask[k]-radius:y_mask[k]+radius,x_mask[k]-radius:x_mask[k]+radius])
-        p_sig = np.nanmedian(sig[y_mask[k]-radius:y_mask[k]+radius,x_mask[k]-radius:x_mask[k]+radius])
-        p_vel_b = np.nanmedian(vel_b[y_mask[k]-radius:y_mask[k]+radius,x_mask[k]-radius:x_mask[k]+radius])
-        p_sig_b = np.nanmedian(sig_b[y_mask[k]-radius:y_mask[k]+radius,x_mask[k]-radius:x_mask[k]+radius])
+
+        if y_mask[k]-radius < 0:
+            y0 = 0
+            y1 = y_mask[k]+radius
+        elif y_mask[k]-radius > np.shape(a)[0]:
+            y0 = y_mask[k]-radius
+            y1 = np.shape(a)[0]
+        else:
+            y0 = y_mask[k] - radius
+            y1 = y_mask[k] + radius
+
+        if x_mask[k]-radius < 0:
+            x0 = 0
+            x1 = x_mask[k]+radius
+        elif x_mask[k]-radius > np.shape(a)[0]:
+            x0 = x_mask[k]-radius
+            x1 = np.shape(a)[0]
+        else:
+            x0 = x_mask[k] - radius
+            x1 = x_mask[k] + radius
+
+        p_a = np.nanmedian(a[y0:y1, x0:x1])
+        p_b = np.nanmedian(b[y0:y1, x0:x1])
+        p_flux = np.nanmedian(flux[y0:y1, x0:x1])
+        p_flux_b = np.nanmedian(flux_b[y0:y1, x0:x1])
+        p_ratio = np.nanmedian(ratio[y0:y1, x0:x1])
+        p_vel = np.nanmedian(vel[y0:y1, x0:x1])
+        p_sig = np.nanmedian(sig[y0:y1, x0:x1])
+        p_vel_b = np.nanmedian(vel_b[y0:y1, x0:x1])
+        p_sig_b = np.nanmedian(sig_b[y0:y1, x0:x1])
         
         if ~np.isfinite(p_a):
             p_a = results[y_mask[k],x_mask[k]].params['a'].value

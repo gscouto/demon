@@ -2,8 +2,8 @@
 
 n_proc = 7                 # number of processors to use in the run
 
-cube_path = '/home/guilherme/bolsa/AIP/young_radio_gals/05_pyparadise/'         # directory path to where the cubes to be fitted are located
-results_path = '/home/guilherme/bolsa/AIP/young_radio_gals/05_pyparadise/EL_fits/'                          # directory path to where the results of the fit will be saved
+cube_path = '/home/guilherme/bolsa/AIP/young_radio_gals/01_cubes/'         # directory path to where the cubes to be fitted are located
+results_path = '/home/guilherme/bolsa/AIP/young_radio_gals/02_EL_fits/'                          # directory path to where the results of the fit will be saved
 
 ##### FITTING DEFINITIONS
 
@@ -20,7 +20,7 @@ aut_ini = 'no'              # initial parameters set by the code based on a prel
 
 hahb_flag = 'no'            # should the second component fit constrain the Ha/Hb ratio as the same as the first component? / 'yes' or 'no' [NOT IMPLEMENTED YET]
 
-ids = ['4C+52.37.cont_res']     # names of the galaxies to be fitted (they must match the name of the datacube file, ex: 'NGC1097'+.fits)
+ids = ['4C+52.37_median_norm1e16_3sigsmooth']     # names of the galaxies to be fitted (they must match the name of the datacube file, ex: 'NGC1097'+.fits)
 
 ##### SPECTRA DEFINITIONS
 
@@ -48,13 +48,13 @@ init_params = {
 'flux' : 2.,              # initial guess (IG) for the integrated flux of the (main) emission line
 'flux_min' : 0.0,           # minimum value
 
-'vel' : 0.,
-'vel_min' : -700.,
-'vel_max' : 700.,
+'vel' : 31730.,
+'vel_min' : -1000.,
+'vel_max' : 1000.,
 
-'sig' :100.,
-'sig_min' : 20.0,
-'sig_max' : 1000.,
+'sig' :150.,
+'sig_min' : 60.0,
+'sig_max' : 700.,
 
 'n2_ha_ratio' : 1.,
 'n2_ha_ratio_min' : 0.01,
@@ -68,17 +68,17 @@ init_params = {
 's2_ratio_min' : 0.4,
 's2_ratio_max' : 1.5,
 
-'flux_delta' : 5.,          # [USED IN MORE COMPS] relation between narrow and broad flux components: flux_delta = flux_broad/flux_narrow
-'flux_delta_min' : 1.,
-'flux_delta_max' : 50.,
+'flux_delta' : 0.3,          # [USED IN MORE COMPS] relation between narrow and broad flux components: flux_delta = flux_broad/flux_narrow
+'flux_delta_min' : 0.1,
+'flux_delta_max' : 10.,
 
 'sig_delta' : 5,          # [USED IN MORE COMPS] relation between narrow and broad sigma components: sig_delta = sig_broad/sig_narrow
-'sig_delta_min' : 3.,
-'sig_delta_max' : 7.,
+'sig_delta_min' : 2.,
+'sig_delta_max' : 10.,
 
 'vel_delta' : 0.,           # [USED IN MORE COMPS] relation between narrow and broad velocity components: vel_delta = vel_narrow - vel_broad 
-'vel_delta_min' : -300.,
-'vel_delta_max' : 300.
+'vel_delta_min' : -1000.,
+'vel_delta_max' : 1000.
 
 }
 
