@@ -54,19 +54,21 @@ for g in ids:
 
     lines_to_fit = ilines
 
+    data_ext = 1
+
     if SL_flag == 'yes':
         cube = fits.open(cube_path + g + '_starlighted.fits')
     if SL_flag == 'no':
         cube = fits.open(cube_path + g + '.fits')
 
-    crval3 = cube[0].header['CRVAL3']
+    crval3 = cube[data_ext].header['CRVAL3']
     try:
-        cdelt3 = cube[0].header['CD3_3']
+        cdelt3 = cube[data_ext].header['CD3_3']
     except KeyError:
-        cdelt3 = cube[0].header['CDELT3']
-    naxis1 = cube[0].header['NAXIS1']
-    naxis2 = cube[0].header['NAXIS2']
-    naxis3 = cube[0].header['NAXIS3']
+        cdelt3 = cube[data_ext].header['CDELT3']
+    naxis1 = cube[data_ext].header['NAXIS1']
+    naxis2 = cube[data_ext].header['NAXIS2']
+    naxis3 = cube[data_ext].header['NAXIS3']
 
     lam = (np.arange(naxis3) * cdelt3) + crval3
 
@@ -84,9 +86,9 @@ for g in ids:
         cont1_spec = cube[1].data[lam_i_cont1:lam_f_cont1, :, :] - cube[5].data[lam_i_cont1:lam_f_cont1, :, :]
         cont2_spec = cube[1].data[lam_i_cont2:lam_f_cont2, :, :] - cube[5].data[lam_i_cont2:lam_f_cont2, :, :]
     if SL_flag == 'no':
-        SN_spec = cube[0].data[lam_i_SN:lam_f_SN, :, :]
-        cont1_spec = cube[0].data[lam_i_cont1:lam_f_cont1, :, :]
-        cont2_spec = cube[0].data[lam_i_cont2:lam_f_cont2, :, :]
+        SN_spec = cube[data_ext].data[lam_i_SN:lam_f_SN, :, :]
+        cont1_spec = cube[data_ext].data[lam_i_cont1:lam_f_cont1, :, :]
+        cont2_spec = cube[data_ext].data[lam_i_cont2:lam_f_cont2, :, :]
 
     SN = (np.nanmean(SN_spec, axis=0) - (
         np.nanmean([np.nanmean(cont1_spec, axis=0), np.nanmean(cont2_spec, axis=0)], axis=0)))
