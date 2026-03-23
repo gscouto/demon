@@ -371,7 +371,7 @@ for g in ids:
                 print('Fitting the following emission lines: N2 and Ha')
                 print('')
                 gmodel = Model(fit_functions.three_gaussians_cons)
-                params, f_res, lam_r, SN = initial_parameters.ha_n2_cons(gmodel, lam, cube, SN, c, results_dir, aut_ini)
+                params, f_res, lam_r, SN = initial_parameters.ha_n2_cons(gmodel, lam, cube, SN, c, results_dir, aut_ini, data_ext)
 
             elif lines_to_fit == 'ha_n2_2g_cons':
                 print('Fitting the following emission lines: N2 and Ha (2 gaussians each)')

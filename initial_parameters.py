@@ -391,7 +391,7 @@ def ha_n2(gmodel, lam, cube, SN, c, results_dir, aut_ini):
     return params, f_res, lam_r, SN
 
 
-def ha_n2_cons(gmodel, lam, cube, SN, c, results_dir, aut_ini):
+def ha_n2_cons(gmodel, lam, cube, SN, c, results_dir, aut_ini, data_ext):
     params = gmodel.make_params()
 
     params['a'].value = init_params['a']
@@ -419,9 +419,9 @@ def ha_n2_cons(gmodel, lam, cube, SN, c, results_dir, aut_ini):
         lam_f = (np.abs(lam - (params['vel'] * params['lam02'] / c + params['lam02'] + 70.))).argmin()
 
         if SL_flag == 'yes':
-            f_res = cube[0].data[lam_i:lam_f, :, :] - cube[5].data[lam_i:lam_f, :, :]
+            f_res = cube[data_ext].data[lam_i:lam_f, :, :] - cube[5].data[lam_i:lam_f, :, :]
         if SL_flag == 'no':
-            f_res = cube[0].data[lam_i:lam_f, :, :]
+            f_res = cube[data_ext].data[lam_i:lam_f, :, :]
         lam_r = lam[lam_i:lam_f]
 
         SN_exp = np.exp(SN[np.newaxis, :, :])
@@ -448,9 +448,9 @@ def ha_n2_cons(gmodel, lam, cube, SN, c, results_dir, aut_ini):
     lam_f = (np.abs(
         lam - (params['vel'] * params['lam02'] / c + params['lam02'] + (init_params['spec_wind'] / 2.)))).argmin()
     if SL_flag == 'yes':
-        f_res = cube[0].data[lam_i:lam_f, :, :] - cube[5].data[lam_i:lam_f, :, :]
+        f_res = cube[data_ext].data[lam_i:lam_f, :, :] - cube[5].data[lam_i:lam_f, :, :]
     if SL_flag == 'no':
-        f_res = cube[0].data[lam_i:lam_f, :, :]
+        f_res = cube[data_ext].data[lam_i:lam_f, :, :]
     lam_r = lam[lam_i:lam_f]
 
     return params, f_res, lam_r, SN
